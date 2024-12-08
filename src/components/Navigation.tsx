@@ -8,7 +8,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-44 bg-white border-r border-gray-200 p-4 space-y-2">
+    <nav className="fixed left-0 top-0 h-screen w-44 bg-white border-r border-gray-200 p-4 space-y-2 overflow-y-auto">
       {defaultNavConfig.map((item) => (
         <div key={item.id} className="space-y-1">
           <Link

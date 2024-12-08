@@ -41,5 +41,15 @@ export const defaultNavConfig: NavConfig[] = [
       { id: 'strategy2', title: '策略2', path: '/mystrategy/strategy2' },
       { id: 'strategy3', title: '策略3', path: '/mystrategy/strategy3' },
     ]
+  },
+  {
+    id: 'strategy',
+    title: '策略构建器',
+    path: '/strategy',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.25 0-9.75 4.5-9.75 9.75S6.75 21 12 21s9.75-4.5 9.75-9.75S17.25 2.25 12 2.25zm0 17.25c-4.125 0-7.5-3.375-7.5-7.5S7.875 4.5 12 4.5s7.5 3.375 7.5 7.5-3.375 7.5-7.5 7.5zm-1.5-11.25h3v3h-3v-3zm0 4.5h3v3h-3v-3z" />
+      </svg>
+    ),
   }
 ];
