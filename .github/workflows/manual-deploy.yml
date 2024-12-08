@@ -1,0 +1,44 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "部署环境"
+        required: true
+        default: "production"
+        type: choice
+        options:
+          - production
+          - staging
+
+# 添加权限配置
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the app
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ github.event.inputs.environment == 'production' && 'itrade-web.t3techs.com' || 'itrade-web-staging.t3techs.com' }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          cname: ${{ github.event.inputs.environment == 'production' && 'itrade-web.t3techs.com' || 'itrade-web-staging.t3techs.com' }}
