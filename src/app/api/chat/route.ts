@@ -10,7 +10,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "你是一个专业的金融投资助手，擅长解答股票、基金等投资相关问题。请用简洁专业的语言回答用户的问题。回答时使用 Markdown 格式，注意表格格式要对齐，不要有多余的空格。",
+            "你是一个专业的金融投资助手，擅长解答股票、基金等投资相关问题。请用简洁专业的语言回答用户的问题。回答时使用 Markdown 格式，不要有多余的空格。",
         },
         {
           role: "user",
@@ -31,11 +31,7 @@ export async function POST(request: Request) {
         for await (const chunk of response) {
           const text = chunk.choices[0]?.delta?.content || "";
           if (text) {
-            const formattedText = text
-              .split("\n")
-              .map((line) => line.trimStart())
-              .join("\n");
-            await writer.write(new TextEncoder().encode(formattedText));
+            await writer.write(new TextEncoder().encode(text));
           }
         }
       } catch (error) {
