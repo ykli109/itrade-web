@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Strategy, StrategyCondition } from '@/types/strategy';
 import ConditionCard from './ConditionCard';
+import { StockStrategyCalculator } from '@/utils/strategyCalculator';
 
 export default function StrategyBuilder() {
   const [strategy, setStrategy] = useState<Strategy>({
@@ -42,15 +43,14 @@ export default function StrategyBuilder() {
 
   const handleSubmit = async () => {
     try {
-    //   const response = await fetch('/api/strategy/execute', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(strategy),
-    //   });
-    //   const data = await response.json();
-      // 处理结果
+      const response = await fetch('/api/stock/data');
+      const stockData = await response.json();
+      
+      const calculator = new StockStrategyCalculator(stockData);
+      const matchingStocks = calculator.findMatchingStocks(strategy);
+      
+      // 处理结果，例如显示匹配的股票列表
+      console.log('匹配的股票：', matchingStocks);
     } catch (error) {
       console.error('Strategy execution failed:', error);
     }
